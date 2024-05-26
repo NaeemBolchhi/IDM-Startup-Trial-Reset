@@ -1,25 +1,25 @@
 do {
   # Prompt the user for input
-  Write-Host ""
+  Write-Host " "
   Write-Host "Which drive is Windows installed in?"
-  Write-Host ""
+  Write-Host " "
   $name = Read-Host "Write only one letter"
 
   # Check if the input length is 1 character
   if ($name.Length -eq 1) {
     # Exit the loop if it's one character
-    Write-Host ""
+    Write-Host " "
     break
   } else {
     # Inform user about incorrect input and prompt again
-    Write-Host ""
+    Write-Host " "
     Write-Host "Please enter only one character (a letter)."
-    Write-Host ""
+    Write-Host " "
   }
 } while ($true)  # Loop continues until a single character is entered
 
 Write-Host "Drive $name selected as Windows location."
-Write-Host ""
+Write-Host " "
 
 $DownloadURL = 'https://raw.githubusercontent.com/NaeemBolchhi/IDM-Startup-Trial-Reset/main/IAS.cmd'
 
@@ -38,9 +38,9 @@ $taskName = "IDM Startup Trial Reset"
 # Check if the task exists
 $taskExists = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
 
-Write-Host ""
+Write-Host " "
 Write-Host "Checking for duplicate tasks..."
-Write-Host ""
+Write-Host " "
 
 if ($taskExists) {
     # Delete the task
@@ -50,9 +50,9 @@ if ($taskExists) {
     Write-Output "No duplicate task was found."
 }
 
-Write-Host ""
+Write-Host " "
 Write-Host "Checking for duplicate scripts..."
-Write-Host ""
+Write-Host " "
 
 if (Test-Path $FilePath) {
     $item = Get-Item -LiteralPath $FilePath
@@ -62,10 +62,10 @@ if (Test-Path $FilePath) {
     Write-Output "No duplicate script was found."
 }
 
-Write-Host ""
-Write-Host ""
+Write-Host " "
+Write-Host " "
 Write-Host "Downloading IDM Reset script..."
-Write-Host ""
+Write-Host " "
 
 try {
     $webClient = New-Object System.Net.WebClient
@@ -83,7 +83,7 @@ if (Test-Path $FilePath) {
     Write-Host "Report this error to NaeemBolchhi. (#2)"
 }
 
-Write-Host ""
+Write-Host " "
 Write-Host "Setting up an automated task in Task Scheduler..."
 
 # Define the XML for the task
@@ -144,16 +144,16 @@ Register-ScheduledTask -Xml (Get-Content $taskXmlPath | Out-String) -TaskName $t
 $taskExists2 = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
 
 if ($taskExists2) {
-    Write-Host ""
+    Write-Host " "
     Write-Host "Task created successfully."
-    Write-Host ""
+    Write-Host " "
     Write-Host "Task will run once automatically."
     Start-ScheduledTask -TaskName $taskName
 } else {
-    Write-Host ""
+    Write-Host " "
     Write-Host "Task creation failed."
-    Write-Host ""
+    Write-Host " "
     Write-Host "Report this error to NaeemBolchhi. (#3)"
 }
 
-Write-Host ""
+Write-Host " "
