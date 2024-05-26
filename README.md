@@ -10,8 +10,6 @@
 
  - IDM updates can be installed directly as the trial reset initiates on every boot.
 
- - In case IDM nags you about registering, which it shouldn't, just run the `IAS.cmd` file in your Startup folder. It is recommended to keep that file pinned to your start menu for easier access.
-
 <br>
 
 ####   OS requirement: Windows 7, 8, 8.1, 10 & 11
@@ -30,7 +28,11 @@ Copy-paste the following code and press enter:
 
     iwr -useb https://naeembolchhi.github.io/IDM-Startup-Trial-Reset/startup.ps1 | iex
 
-The script will automatically reset IDM trial and place the trial reset script in your Startup folder.
+The script will automatically reset IDM trial and create a task so that the trial reset script runs on every boot.
+
+Looking to remove this script and its associated task? Copy-paste the following code and press enter:
+
+    iwr -useb https://naeembolchhi.github.io/IDM-Startup-Trial-Reset/remove.ps1 | iex
 
 <br>
 
