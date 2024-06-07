@@ -25,6 +25,8 @@ $FilePathOld = "${name}:\ProgramData\Microsoft\Windows\Start Menu\Programs\Start
 
 $FilePath = "${name}:\ProgramData\IAS.cmd"
 
+$FilePath2 = "${name}:\ProgramData\IDMA.cmd"
+
 if (Test-Path $FilePathOld) {
     $item = Get-Item -LiteralPath $FilePathOld
     $item.Delete()
@@ -37,6 +39,13 @@ if (Test-Path $FilePath) {
     $item.Delete()
     Write-Host ""
     Write-Host "Removed a file from $FilePath."
+}
+
+if (Test-Path $FilePath2) {
+  $item = Get-Item -LiteralPath $FilePath2
+  $item.Delete()
+  Write-Host ""
+  Write-Host "Removed a file from $FilePath2."
 }
 
 # Define the task name

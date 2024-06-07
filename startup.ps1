@@ -22,10 +22,12 @@ Write-Host "Drive $name selected as Windows location."
 Write-Host " "
 
 $DownloadURL = 'https://raw.githubusercontent.com/NaeemBolchhi/IDM-Startup-Trial-Reset/main/IAS.cmd'
+$DownloadURL2 = 'https://raw.githubusercontent.com/NaeemBolchhi/IDM-Startup-Trial-Reset/main/IDMA.cmd'
 
 $FilePathOld = "${name}:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\IAS.cmd"
 
 $FilePath = "${name}:\ProgramData\IAS.cmd"
+$FilePath2 = "${name}:\ProgramData\IDMA.cmd"
 
 if (Test-Path $FilePathOld) {
     $item = Get-Item -LiteralPath $FilePathOld
@@ -38,28 +40,36 @@ $taskName = "IDM Startup Trial Reset"
 # Check if the task exists
 $taskExists = Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue
 
-Write-Host " "
-Write-Host "Checking for duplicate tasks..."
+# Write-Host " "
+# Write-Host "Checking for duplicate tasks..."
 Write-Host " "
 
 if ($taskExists) {
     # Delete the task
     Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
-    Write-Output "Duplicate task was found and deleted."
+    # Write-Output "Duplicate task was found and deleted."
 } else {
-    Write-Output "No duplicate task was found."
+    # Write-Output "No duplicate task was found."
 }
 
-Write-Host " "
-Write-Host "Checking for duplicate scripts..."
+# Write-Host " "
+# Write-Host "Checking for duplicate scripts..."
 Write-Host " "
 
 if (Test-Path $FilePath) {
     $item = Get-Item -LiteralPath $FilePath
     $item.Delete()
-    Write-Output "Duplicate script was found and deleted."
+    # Write-Output "Duplicate script was found and deleted."
 } else {
-    Write-Output "No duplicate script was found."
+    # Write-Output "No duplicate script was found."
+}
+
+if (Test-Path $FilePath2) {
+  $item = Get-Item -LiteralPath $FilePath2
+  $item.Delete()
+  # Write-Output "Duplicate script was found and deleted."
+} else {
+  # Write-Output "No duplicate script was found."
 }
 
 Write-Host " "
@@ -70,6 +80,7 @@ Write-Host " "
 try {
     $webClient = New-Object System.Net.WebClient
     $webClient.DownloadFile($DownloadURL, $FilePath)
+    $webClient.DownloadFile($DownloadURL2, $FilePath2)
 } catch {
     Write-Error $_
     Write-Host "Report this error to NaeemBolchhi. (#1)"
@@ -78,13 +89,20 @@ try {
 
 if (Test-Path $FilePath) {
     #Start-Process $FilePath -Wait
-    Write-Host "Placed IDM Reset script in ${FilePath}."
+    # Write-Host "Placed IDM Reset script in ${FilePath}."
 } else {
     Write-Host "Report this error to NaeemBolchhi. (#2)"
 }
 
+if (Test-Path $FilePath2) {
+  #Start-Process $FilePath -Wait
+  # Write-Host "Placed IDM Reset script in ${FilePath2}."
+} else {
+  Write-Host "Report this error to NaeemBolchhi. (#3)"
+}
+
 Write-Host " "
-Write-Host "Setting up an automated task in Task Scheduler..."
+Write-Host "Setting up automated tasks in Task Scheduler..."
 
 # Define the XML for the task
 $taskXml = @"
@@ -129,6 +147,9 @@ $taskXml = @"
   <Actions Context="Author">
     <Exec>
       <Command>${FilePath}</Command>
+    </Exec>
+    <Exec>
+      <Command>${FilePath2}</Command>
     </Exec>
   </Actions>
 </Task>

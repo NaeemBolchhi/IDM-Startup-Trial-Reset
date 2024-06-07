@@ -460,7 +460,10 @@ echo %line%
 echo:
 call :_color %Green% "The IDM reset process has been completed."
 
-goto done
+REM goto done
+exit /b
+
+::========================================================================================================================================
 
 :delete_queue
 
