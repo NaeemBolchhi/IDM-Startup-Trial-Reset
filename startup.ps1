@@ -174,7 +174,7 @@ if ($taskExists2) {
     Write-Host " "
     Write-Host "Task creation failed."
     Write-Host " "
-    Write-Host "Report this error to NaeemBolchhi. (#3)"
+    Write-Host "Report this error to NaeemBolchhi. (#4)"
 }
 
 Write-Host " "
